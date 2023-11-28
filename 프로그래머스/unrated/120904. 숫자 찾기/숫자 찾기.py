@@ -6,4 +6,10 @@ def solution(num, k):
         answer=num_str.index(k_str)+1
     else:
         answer=-1
+        
+    # 다른 풀이2
+    # for i, n in enumerate(str(num)):
+    #     if str(k) == n:
+    #         return i + 1
+    #     return -1
     return answer
