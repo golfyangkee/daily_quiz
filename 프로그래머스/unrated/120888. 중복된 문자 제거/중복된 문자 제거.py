@@ -6,4 +6,6 @@ def solution(my_string):
         else :
             answer += i
             
+    # 다른 풀이
+        # return ''.join(dict.fromkeys(my_string))
     return answer
