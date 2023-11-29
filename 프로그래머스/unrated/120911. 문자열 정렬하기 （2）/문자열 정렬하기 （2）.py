@@ -5,4 +5,7 @@ def solution(my_string):
     my_list.sort()
     for i in my_list:
         answer= answer+i
+        
+    # 다른 풀이
+    # return ''.join(sorted(my_string.lower()))
     return answer
