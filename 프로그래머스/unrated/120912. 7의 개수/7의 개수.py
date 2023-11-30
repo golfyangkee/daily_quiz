@@ -6,3 +6,6 @@ def solution(array):
     print(str1)
     answer=str1.count('7')
     return answer
+
+    # 다른 풀이
+    # return str(array).count('7')
