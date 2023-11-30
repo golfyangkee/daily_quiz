@@ -7,4 +7,9 @@ def solution(n):
         if (6*num)%n==0:
             answer=num
             break
+            
+    # 다른 풀이
+    # answer = 1
+    # while 6 * answer % n:
+    #     answer += 1
     return answer
