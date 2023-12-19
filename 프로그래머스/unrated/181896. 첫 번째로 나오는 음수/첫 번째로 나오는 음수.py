@@ -6,4 +6,9 @@ def solution(num_list):
             break
         else:
             answer=-1
+            
+    # 다른 풀이
+    # for i in range(len(num_list)):
+    #     if num_list[i]<0:return i
+    # return -1
     return answer
