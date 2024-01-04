@@ -6,3 +6,7 @@ def solution(myString):
             answer.append(i)
     answer.sort()
     return answer
+
+# 다른 풀이
+# answer = ' '.join(myString.split('x')).split()
+#  return sorted(answer)
