@@ -9,3 +9,6 @@ def solution(a, d, included):
         if included[i]==True:
             answer+=list1[i]
     return answer
+# 다른 풀이 int 사용하기 true=1 , false=0
+    # for i in range(len(included)):
+    #     answer += (a + d * i) * int(included[i])
