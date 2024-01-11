@@ -10,3 +10,5 @@ def solution(date1, date2):
     else:
         answer=0
     return answer
+# 다른 풀이
+# return int(date1 < date2)
