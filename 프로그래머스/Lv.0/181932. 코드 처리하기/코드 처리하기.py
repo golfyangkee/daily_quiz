@@ -15,3 +15,4 @@ def solution(code):
     if result == '':
         return 'EMPTY'
     return result
+#  return "".join(code.split("1"))[::2] or "EMPTY"
