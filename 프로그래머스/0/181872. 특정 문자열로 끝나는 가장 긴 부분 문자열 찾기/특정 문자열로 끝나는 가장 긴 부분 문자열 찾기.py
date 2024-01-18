@@ -7,3 +7,4 @@ def solution(myString, pat):
         re_a=re_s[a:]
         answer=re_a[::-1]
     return answer
+# solution=lambda x,y:x[:x.rindex(y)+len(y)]
