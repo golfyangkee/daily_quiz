@@ -7,3 +7,9 @@ def solution(my_string):
         cnt = my_string.count(i)
         answer[chars[i]] = cnt
     return answer
+
+    # for x in my_string:
+    #     if x.isupper():
+    #         answer[ord(x)-65]+=1
+    #     else:
+    #         answer[ord(x)-71]+=1
