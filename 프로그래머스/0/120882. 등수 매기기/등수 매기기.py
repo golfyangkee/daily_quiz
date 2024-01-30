@@ -8,3 +8,4 @@ def solution(score):
         answer.append(avg_sorted.index(i)+1) # index는 맨 앞에 위치한 요소의 인덱스 번호를 리턴
         
     return answer
+# return [a.index(sum(i))+1 for i in score]
