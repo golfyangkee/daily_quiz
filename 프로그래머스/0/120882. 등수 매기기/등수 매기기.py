@@ -6,6 +6,6 @@ def solution(score):
     answer =[] # 등수
     for i in avg:
         answer.append(avg_sorted.index(i)+1) # index는 맨 앞에 위치한 요소의 인덱스 번호를 리턴
-        
-    return answer
+    return answer        
+# a = sorted([sum(i) for i in score], reverse = True)
 # return [a.index(sum(i))+1 for i in score]
