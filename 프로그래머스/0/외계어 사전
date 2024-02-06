@@ -1,0 +1,6 @@
+def solution(spell, dic):
+    for a in dic:
+        if not set(spell) - set(a):
+            return 1
+        # spell' 집합의 모든 요소가 'a' 집합에 포함되어 있다면, 1을 반환
+    return 2    
