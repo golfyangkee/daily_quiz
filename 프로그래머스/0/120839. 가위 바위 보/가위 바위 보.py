@@ -8,3 +8,8 @@ def solution(rsp):
         elif i == '5':
             answer += '2'
     return answer
+'''
+# 튜플로 풀어보기
+    d = {'0':'5','2':'0','5':'2'}
+    return ''.join(d[i] for i in rsp)
+'''
