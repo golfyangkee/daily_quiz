@@ -9,5 +9,5 @@ def solution(my_string):
 isdigit()
 isnumeric()
 함수 사용하기
-    return sum(i for i in my_string if i.isdigit())
+    return sum(int(i) for i in my_string if i.isdigit())
 '''
