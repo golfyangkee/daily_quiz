@@ -4,3 +4,10 @@ def solution(my_string):
         if i == '1' or i == '2' or i == '3' or i == '4' or i == '5' or i == '6'or i == '7' or i == '8' or i == '9':
             answer=answer+int(i)
     return answer
+
+'''
+isdigit()
+isnumeric()
+함수 사용하기
+    return sum(i for i in my_string if i.isdigit())
+'''
