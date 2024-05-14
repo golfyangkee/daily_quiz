@@ -6,3 +6,8 @@ def solution(my_string):
         else :
             answer+=i.lower()
     return answer
+
+'''
+swapcase() 사용하기
+    return my_string.swapcase()
+'''
