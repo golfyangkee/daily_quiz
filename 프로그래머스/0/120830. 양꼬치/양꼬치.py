@@ -1,5 +1,3 @@
 def solution(n, k):
-    m=n//10
-    l=n%10
-    answer = 120000*m + 12000*l + 2000*(k-m)
-    return answer
+    service = n//10
+    return 12000*n + 2000*(k-service)
