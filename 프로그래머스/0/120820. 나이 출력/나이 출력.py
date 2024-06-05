@@ -1,3 +1,2 @@
 def solution(age):
-    answer = 2023-age
-    return answer
+    return (2022-age)+1
