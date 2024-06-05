@@ -1,7 +1,5 @@
 def solution(numbers):
-    sum=0
-    count=len(numbers)
+    answer = 0
     for i in numbers:
-        sum+=i
-    answer=sum/count
-    return answer
+        answer+=i
+    return answer/len(numbers)
