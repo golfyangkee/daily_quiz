@@ -1,9 +1,9 @@
 def solution(s):
     answer = 0
-    s=list(s.split(' '))
-    for i in range(len(s)):
-        if s[i]=='Z':
-            answer-=int(s[i-1])
+    list = s.split(' ')
+    for i in range(0,len(list)):
+        if list[i] == 'Z':
+            answer -= int(list[i-1])
         else:
-            answer+=int(s[i])
+            answer += int(list[i])
     return answer
