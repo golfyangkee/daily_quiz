@@ -1,5 +1,10 @@
 def solution(numbers, k):
-    i=2*(k-1)
-    
-    return numbers[i%len(numbers)]
-            
+    num = len(numbers)//2
+    test =[]
+    if num <k:
+        for i in range(0,k-num):
+            test.extend(numbers)
+    else:
+          test = numbers  
+    answer = test[::2]
+    return answer[k-1]
