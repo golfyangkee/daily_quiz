@@ -1,11 +1,12 @@
 def solution(score):
-    answer = [] # 등수
-    avg=[sum(i)/2 for i in score] # 평균
-    avg_sorted=sorted(avg, reverse=True) # 평균을 큰 값부터 내림차순 정렬
-
-    answer =[] # 등수
-    for i in avg:
-        answer.append(avg_sorted.index(i)+1) # index는 맨 앞에 위치한 요소의 인덱스 번호를 리턴
-    return answer        
-# a = sorted([sum(i) for i in score], reverse = True)
-# return [a.index(sum(i))+1 for i in score]
+    answer = []
+    for i in score:
+        # 점수 합
+        answer.append((i[0]+i[1]))
+    # 높은 순으로 정렬
+    sort_hap = sorted(answer, reverse = True)
+    # score의 인덱스랑 answer 인덱스는 같은 아이들
+    # sort_hap 크기 순서
+    rank = [sort_hap.index(i) + 1 for i in answer]
+    # 인덱스가 같은 점수는 처음꺼가 나오니까 자동으로 4, 4, 6 이런식으로 나온다.
+    return rank
