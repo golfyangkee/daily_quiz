@@ -1,11 +1,15 @@
 def solution(sides):
+    answer = []
     sides.sort()
-    a=max(sides)
-    b=sides[0]
-    c=a-b
-    cnt=0
-    for i in range(c+1,a):
-        cnt+=1
-    for i in range(a+1,a+b+1):
-        cnt+=1
-    return cnt
+    num = sides[-1]
+    # answer 이 가장 긴 길이일 때 = num보다는 크고 sum보다는 작다.
+    # num <= answer < sides[0] + num
+    for i in range(num, sides[0]+num):
+        answer.append(i)
+    
+    # num이 가장 긴 길이일 때
+    # num > answer >= num - sides[0]
+    for i in range(num-sides[0], num):
+        answer.append(i)
+    result = set(answer)
+    return len(result) -1
