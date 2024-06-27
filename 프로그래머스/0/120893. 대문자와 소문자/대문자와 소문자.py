@@ -1,13 +1,3 @@
 def solution(my_string):
-    answer = ''
-    for i in my_string:
-        if i.islower():
-            answer+=i.upper()
-        else :
-            answer+=i.lower()
+    answer = my_string.swapcase()
     return answer
-
-'''
-swapcase() 사용하기
-    return my_string.swapcase()
-'''
