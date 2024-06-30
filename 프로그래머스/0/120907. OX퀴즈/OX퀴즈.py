@@ -1,3 +1,4 @@
+# eval 쓰는게 보안 상 안 좋다고 함
 def solution(quiz):
     answer = []
     for i in quiz:
