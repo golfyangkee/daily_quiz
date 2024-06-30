@@ -1,18 +1,10 @@
 def solution(quiz):
     answer = []
-    # [연산자]는 + 와 - 중 하나입니다.
-    for q in quiz:
-        left, right = q.split('=')
-        left = left.split()
-        print(left)
-        if left[1] == '+': # 더하기 연산
-            if int(left[0]) + int(left[2]) == int(right):
-                answer.append('O')
-            else:
-                answer.append('X')
-        elif left[1] == '-': # 빼기 연산
-            if int(left[0]) - int(left[2]) == int(right):
-                answer.append('O')
-            else:
-                answer.append('X')
+    for i in quiz:
+        result = i.split()
+        index_1 = result.index('=')
+        if eval(''.join(result[:index_1])) == int(result[index_1+1]):
+            answer.append('O')
+        else:
+            answer.append('X')
     return answer
