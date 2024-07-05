@@ -1,12 +1,16 @@
 def solution(arr):
-    a=len(arr)
-    b=len(arr[0])
-    c=a-b
-    if c>0:
-        for i in range(a):
-            for j in range(c):
+    row = len(arr)
+    column = len(arr[0])
+    if row > column:
+        num = row-column
+        for i in range(0,row):
+            for j in range(0,num):
                 arr[i].append(0)
-    elif c<0:
-        for i in range(-c):
-            arr.append([0]*b)
+    elif row < column:
+        num = column - row
+        for i in range(0,num):
+            add = []
+            for j in range(0, column):
+                add.append(0)
+            arr.append(add)
     return arr
