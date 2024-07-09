@@ -1,13 +1,12 @@
 def solution(order):
     answer = 0
-    ameri_cnt=0
-    latte_cnt=0
+    dict1 = {4500:["iceamericano", "americanoice", "hotamericano", "americanohot", "americano", "anything"], 5000:["icecafelatte", "cafelatteice", "hotcafelatte", "cafelattehot", "cafelatte"]}
+    menu = {}
+    for price, items in dict1.items():
+        for item in items:
+            menu[item] = price
+    
     for i in order:
-        if "americano" in i:
-            ameri_cnt+=1
-        elif "latte" in i :
-            latte_cnt+=1
-        elif "anything" in i :
-            ameri_cnt+=1
-    answer=ameri_cnt*4500+latte_cnt*5000
+        if i in menu:
+            answer += menu[i]
     return answer
