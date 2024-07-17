@@ -1,8 +1,11 @@
 def solution(arr):
-    answer = []
-    count = 0 
-    length = len(arr)
-    while length > 1:
-        length = length / 2
-        count += 1
-    return arr + [0] * (2 ** count - len(arr))
+    even = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
+    for i in even:
+        if len(arr)<=i:
+            if len(arr)==i:
+                break
+            else:
+                while len(arr)!=i:
+                    arr.append(0)
+                break
+    return arr
