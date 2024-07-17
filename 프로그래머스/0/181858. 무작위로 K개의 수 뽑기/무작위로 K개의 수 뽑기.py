@@ -3,9 +3,10 @@ def solution(arr, k):
     for i in arr:
         if i not in answer:
             answer.append(i)
-    answer=answer[:k]
+        else:
+            pass
     if len(answer)<k:
-        a=k-len(answer)
-        for i in range(a):
+        while len(answer)!=k:
             answer.append(-1)
-    return answer
+    
+    return answer[:k]
