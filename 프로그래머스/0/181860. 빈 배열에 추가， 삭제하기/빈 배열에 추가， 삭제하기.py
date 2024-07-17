@@ -1,11 +1,13 @@
 def solution(arr, flag):
-    answer = []    
-    for i, v in enumerate(flag):
-        if v :
-            for j in range(0, arr[i]*2):
-                answer.append(arr[i])
+    answer = []
+    for i in range(len(flag)):
+        if flag[i] == True:
+            num = arr[i]
+            a = num*2
+            for i in range(a):
+                answer.append(num)
         else:
-            for j in range(0, arr[i]):
-                answer.pop();
-                
+            if len(answer) !=0:
+                for i in range(arr[i]):
+                    answer.pop()
     return answer
