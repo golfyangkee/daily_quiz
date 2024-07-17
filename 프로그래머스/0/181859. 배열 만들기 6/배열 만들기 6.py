@@ -1,16 +1,18 @@
 def solution(arr):
-    stk=[]
+    answer = []
+    num = len(arr)
     i=0
-    while i<len(arr):
-        if len(stk)==0:
-            stk.append(arr[i])
+    while i < num:
+        if len(answer) ==0:
+            answer.append(arr[i])
             i+=1
-        elif stk[-1]==arr[i]:
-            stk=stk[:-1]
+        elif len(answer) !=0 and answer[-1]==arr[i]:
+            answer = answer[:-1]
             i+=1
-        elif stk[-1]!=arr[i]:
-            stk.append(arr[i])
+        elif len(answer) !=0 and answer[-1]!=arr[i]:
+            answer.append(arr[i])
             i+=1
-    if len(stk)==0:
-        stk=[-1]
-    return stk
+    if len(answer)==0:
+        return [-1]
+    else:
+        return answer
