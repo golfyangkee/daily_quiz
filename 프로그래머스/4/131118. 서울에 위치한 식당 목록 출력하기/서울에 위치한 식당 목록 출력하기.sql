@@ -2,7 +2,7 @@ WITH SEOUL AS (
 -- 서울 위치 식당 ID, 이름, 음식종류, 즐겨찾기수, 주소 출력
 SELECT REST_ID, REST_NAME, FOOD_TYPE, FAVORITES, ADDRESS
 FROM REST_INFO 
-# WHERE ADDRESS LIKE '%서울%'
+# WHERE ADDRESS LIKE '%서울%' 이렇게 하면 주소에 서울시 동서울동 이런거도 걸리니까 안된다.
 WHERE ADDRESS LIKE '서울%'
 ORDER BY 1
 ),
