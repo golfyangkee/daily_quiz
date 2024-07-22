@@ -10,6 +10,8 @@ def solution(a, d, included):
     
     # true만 더해보자.
     for i in range(len(included)):
+    # answer += (a + d * i) * int(included[i])
+    # int(true) = 1 이니까 이런식으로 for 문 안쓰고도 할 수 있다.
         if included[i] ==True:
             answer += a + d*i
 
