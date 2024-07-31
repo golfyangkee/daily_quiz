@@ -1,6 +1,6 @@
 SELECT COUNT(DISTINCT ID) AS COUNT
 FROM ECOLI_DATA 
-WHERE (GENOTYPE&5) AND !(GENOTYPE&2);
+WHERE ((GENOTYPE&1) OR (GENOTYPE&4)) AND !(GENOTYPE&2);
 
 # 문제에서 형질의 번호는 2진수에서 1의 위치, 값은 별개로 2진수 자체값으로 비교를 하기 때문입니다.
 # genotype이 1111(2)일 경우
