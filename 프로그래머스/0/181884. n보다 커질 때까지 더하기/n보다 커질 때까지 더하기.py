@@ -3,6 +3,5 @@ def solution(numbers, n):
     for i in numbers:
         if answer > n:
             return answer
-        else:
-            answer+=i
+        answer+=i
     return answer
