@@ -1,6 +1,6 @@
 def solution(str_list, ex):
-    answer = ''
+    answer=''
     for i in str_list:
         if ex not in i:
-            answer += i
+            answer+=i
     return answer
