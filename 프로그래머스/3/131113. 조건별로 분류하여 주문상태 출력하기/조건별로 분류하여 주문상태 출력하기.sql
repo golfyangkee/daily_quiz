@@ -1,12 +1,5 @@
-WITH S AS (
-SELECT ORDER_ID, CASE WHEN OUT_DATE <= '2022-05-01' THEN '출고완료'
-                      WHEN OUT_DATE IS NULL THEN '출고미정'
-                      ELSE '출고대기' 
-                      END AS STATUS
+SELECT ORDER_ID, PRODUCT_ID, DATE_FORMAT(OUT_DATE, '%Y-%m-%d') AS OUT_DATE, CASE WHEN DATEDIFF(OUT_DATE, '2022-05-01') > 0 THEN '출고대기'
+                                            WHEN DATEDIFF(OUT_DATE, '2022-05-01') <= 0 THEN '출고완료'
+                                            ELSE '출고미정' END 출고여부
 FROM FOOD_ORDER 
-)
-
-
-SELECT FO.ORDER_ID, PRODUCT_ID, DATE_FORMAT(OUT_DATE, '%Y-%m-%d') AS OUT_DATE, S.STATUS
-FROM FOOD_ORDER FO JOIN S USING(ORDER_ID)
 ORDER BY 1;
