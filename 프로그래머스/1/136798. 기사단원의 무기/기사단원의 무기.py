@@ -35,3 +35,31 @@ def solution(number, limit, power):
     #     else:
     #         answer+=hap
     # return answer
+
+'''
+다른 방법 찾아봄
+제곱근을 while 문을 사용해서 진행 해봄
+def solution(number, limit, power):
+    answer = 0
+    
+    # 1부터 number까지의 숫자에 대해 약수 개수 구하기
+    for i in range(1, number + 1):
+        divisor_count = 0  # 각 숫자의 약수 개수를 저장
+        
+        # 1부터 i의 제곱근까지 반복하여 약수 개수 구하기
+        j = 1
+        while j * j <= i:  # 제곱근까지만 반복
+            if i % j == 0:
+                divisor_count += 1  # j는 약수
+                if j != i // j:  # j와 i//j가 다른 경우에만 중복 방지
+                    divisor_count += 1  # i//j도 약수
+            j += 1
+        
+        # 약수 개수가 limit보다 크면 power를 더하고, 그렇지 않으면 약수 개수 더하기
+        if divisor_count > limit:
+            answer += power
+        else:
+            answer += divisor_count
+    
+    return answer
+'''
