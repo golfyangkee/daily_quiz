@@ -1,4 +1,19 @@
 def solution(lottos, win_nums):
+
+    rank=[6,6,5,4,3,2,1] # 일치한 번호 개수에 따른 등수 리스트
+    # rank[2]는 2개의 번호가 일치할 때 5등
+
+    cnt_0 = lottos.count(0) # 0의 개수를 세어 저장 
+    ans = 0 # 일치하는 당첨 번호의 개수 저장 변수
+    for x in win_nums:
+        if x in lottos:
+            ans += 1 # 당천 번호 개수 카운트
+            
+    return rank[cnt_0 + ans],rank[ans]
+    # 최고 순위: 0을 모두 맞는 번호로 가정한 경우
+    # 최저 순위: 0을 모두 틀린 번호로 가정한 경우
+'''
+def solution(lottos, win_nums):
     # 1. 맞힌 숫자 개수 계산 (0을 제외하고 비교)
     matched = len(set(lottos) & set(win_nums))
     
@@ -18,3 +33,4 @@ def solution(lottos, win_nums):
 
     # 5. 최고 순위와 최저 순위 반환
     return [get_rank(max_matched), get_rank(min_matched)]
+'''
