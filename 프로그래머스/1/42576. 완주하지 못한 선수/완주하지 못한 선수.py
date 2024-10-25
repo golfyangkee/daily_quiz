@@ -1,3 +1,10 @@
+import collections
+
+def solution(participant, completion):
+    # Counter 함수는 요소가 몇 번 등장했는지 쉽게 계산할 수 있음, collections.Counter 객체로 리턴
+    answer = collections.Counter(participant) - collections.Counter(completion)
+    return list(answer.keys())[0] # 키들 리스트로 만들고 그 중 첫번째 값을 리턴하라
+'''
 def solution(participant, completion):
     p_d = {}
     c_d = {}
@@ -13,7 +20,7 @@ def solution(participant, completion):
     for k in p_d:
         if p_d[k] !=0:
             return k
-
+'''
 '''
 효율성 테스트에서 시간 초과로 실패한 것
 def solution(participant, completion):
