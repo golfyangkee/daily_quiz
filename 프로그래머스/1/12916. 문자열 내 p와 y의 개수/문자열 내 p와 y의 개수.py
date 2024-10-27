@@ -1,11 +1,8 @@
 def solution(s):
-    s_list = list(s)
-    answer = True
-    p_num = s_list.count('p')
-    P_num = s_list.count('P')
-    y_num = s_list.count('y')
-    Y_num = s_list.count('Y')
-
-    if p_num+P_num != y_num+Y_num:
+    p = s.count('p') + s.count('P')
+    y = s.count('y') + s.count('Y')
+    
+    if p==y:
+        return True
+    else:
         return False
-    return True
