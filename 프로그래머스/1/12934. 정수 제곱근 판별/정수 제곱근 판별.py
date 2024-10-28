@@ -1,5 +1,6 @@
 def solution(n):
-    x = int(n **(1/2))
-    if n == x **2:
-        return (x+1) **2
-    return -1
+    r = int(n**0.5)
+    if n==r**2:
+        return (r+1)**2
+    else:
+        return -1
