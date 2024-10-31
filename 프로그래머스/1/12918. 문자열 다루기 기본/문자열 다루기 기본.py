@@ -1,5 +1,6 @@
 def solution(s):
-    if len(s)==4 or len(s)==6:
-        if s.isdigit():
+    r = ''.join(i for i in s if i.isdigit())
+    if len(s) == 4 or len(s)==6:
+        if len(r)==len(s):
             return True
     return False
