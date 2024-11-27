@@ -1,4 +1,3 @@
-SELECT COUNT(DISTINCT NAME) AS 'count'
+-- 코드를 입력하세요
+SELECT count(DISTINCT name) AS COUNT
 FROM ANIMAL_INS;
-
--- COUNT는 NULL 집계 X
