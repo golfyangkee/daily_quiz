@@ -11,3 +11,16 @@ max_value = max(numbers)
 
 # 결과 출력
 print(min_value, max_value)
+
+'''
+from sys import stdin
+# stdin은 표준 입력을 처리하는 객체
+
+
+n, *num_list = map(int, stdin.buffer.read().split())
+# **stdin.buffer.read()**는 모든 입력을 바이트 단위로 한 번에 읽음
+# 일반적인 input()은 한 줄씩 입력을 처리하지만
+# stdin.buffer.read()는 전체 입력을 한 번에 읽어 속도가 훨씬 빠름
+
+print(min(num_list), max(num_list))
+'''
