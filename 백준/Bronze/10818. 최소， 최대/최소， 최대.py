@@ -37,5 +37,12 @@ n, *num_list = map(int, stdin.buffer.read().split())
 # print(y)  # 출력: 20
 # print(z)  # 출력: 30
 
+# numbers = [1, 2, 3, 4, 5]
+# a, *b, c = numbers
+# print(a)  # 출력: 1 (첫 번째 값)
+# print(b)  # 출력: [2, 3, 4] (가운데 값들을 리스트로 묶음)
+# print(c)  # 출력: 5 (마지막 값)
+
+
 print(min(num_list), max(num_list))
 '''
