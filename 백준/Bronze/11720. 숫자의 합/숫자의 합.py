@@ -1,6 +1,3 @@
 n = int(input())
-my_str = input()
-result = 0
-for i in my_str:
-    result += int(i)
+result = sum(int(i) for i in input())
 print(result)
