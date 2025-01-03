@@ -16,3 +16,10 @@ for i in range(f):
 
 for row in result:
     print(*row)
+
+'''
+for i in range(N):
+    for j in range(M):
+        A[i][j] = A[i][j] + B[i][j]
+    print(*A[i])
+'''
