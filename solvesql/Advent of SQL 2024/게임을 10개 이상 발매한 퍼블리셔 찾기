@@ -1,0 +1,5 @@
+SELECT name
+FROM companies C join (SELECT publisher_id
+                    FROM games
+                    GROUP BY publisher_id
+                    HAVING COUNT(publisher_id) >= 10) P ON C.company_id = P.publisher_id;
