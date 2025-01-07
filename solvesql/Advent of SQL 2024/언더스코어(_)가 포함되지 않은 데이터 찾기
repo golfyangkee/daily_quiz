@@ -1,0 +1,6 @@
+SELECT DISTINCT page_location
+FROM ga
+WHERE page_location NOT LIKE '%\_%' ESCAPE '\'
+-- ESCAPE 로 사용하고 싶으면 이렇게 사용
+-- _는 한 단어로 취급하기에 이스케이프 사용해야 한다.
+ORDER BY 1;
