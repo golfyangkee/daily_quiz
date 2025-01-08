@@ -1,0 +1,17 @@
+SELECT ROUND(A.gift_artwork/(B.all_artwork*1.0)*100, 3) AS ratio
+-- 여기 부분에서 *1.0 없이하니까 자꾸 정수형으로만 되어서 0 값이 나왔는데 
+-- 이렇게 1.0 (소수) 형태를 곱해주니까 해결되었다.
+FROM (SELECT COUNT(artwork_id) gift_artwork
+FROM artworks
+WHERE credit LIKE "%gift%") AS A, (SELECT COUNT(artwork_id) all_artwork
+FROM artworks) AS B
+
+-- SELECT COUNT(artwork_id) gift_artwork
+-- FROM artworks
+-- WHERE credit LIKE "%gift%"
+-- -- 73597
+
+-- SELECT COUNT(artwork_id) all_artwork
+-- FROM artworks
+-- -- 1306262
+
