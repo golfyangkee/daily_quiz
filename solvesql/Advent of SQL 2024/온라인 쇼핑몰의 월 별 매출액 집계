@@ -1,0 +1,32 @@
+-- -- 취소 주문건 합계
+-- SELECT SUM(price*quantity)
+-- FROM order_items
+-- WHERE order_id LIKE "C%"
+
+-- -- 정상 주문건 합계
+-- SELECT SUM(price*quantity)
+-- FROM order_items
+-- WHERE order_id NOT LIKE "C%"
+
+-- -- 정상 주문건 날짜 합쳐서 월별로 봐보기
+-- -- DATE_FORMAT 함수가 없어서 자꾸 에러나서 strftime 함수써서 만듦
+-- SELECT strftime('%Y-%m', order_date) AS order_month, SUM(order_items.price * order_items.quantity) AS ordered_amount
+-- FROM orders JOIN order_items USING (order_id)
+-- WHERE order_id NOT LIKE "C%"
+-- GROUP BY order_month
+
+-- -- -- 취소 주문건 날짜 합쳐서 월별로 봐보기
+-- SELECT strftime('%Y-%m', order_date) as order_month, SUM(price*quantity) AS canceled_amount
+-- FROM orders JOIN order_items USING(order_id)
+-- WHERE order_id LIKE "C%"
+-- GROUP BY order_month
+
+-- 위에 두개 합쳐서 만들기
+SELECT A.order_month, ordered_amount, canceled_amount, (ordered_amount + canceled_amount) as total_amount
+FROM (SELECT strftime('%Y-%m', order_date) AS order_month, SUM(order_items.price * order_items.quantity) AS canceled_amount
+FROM orders JOIN order_items USING (order_id)
+WHERE order_id LIKE "C%"
+GROUP BY order_month) AS A JOIN (SELECT strftime('%Y-%m', order_date) AS order_month, SUM(order_items.price * order_items.quantity) AS ordered_amount
+FROM orders JOIN order_items USING (order_id)
+WHERE order_id NOT LIKE "C%"
+GROUP BY order_month) B USING (order_month)
