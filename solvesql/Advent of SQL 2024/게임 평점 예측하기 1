@@ -1,0 +1,16 @@
+-- 장르별 평균 평점, 평균 평론가/사용자 수를 구해보자
+SELECT genre_id, ROUND(AVG(critic_score), 3) avg_critic_score,  AVG(critic_count) avg_critic_count , ROUND(AVG(user_score), 3) avg_user_score , ROUND(AVG(user_count)) avg_user_count
+FROM games
+GROUP BY genre_id;
+
+-- 2015년 이후 출시 제품 중 누락 정보 있는 게임 출력 100개
+SELECT game_id, name, critic_score, critic_count, user_score, user_count
+FROM games
+WHERE year >=2015 AND (critic_score | critic_count| user_score| user_count IS NULL)
+
+-- left 조인해서 일단 테이블 하나 만들어보자
+SELECT game_id, name, IFNULL(critic_score,A.avg_critic_score) critic_score, IFNULL(critic_count, A.avg_critic_count) critic_count, IFNULL(user_score, A.avg_user_score) user_score, IFNULL(user_count, A.avg_user_count) user_count
+FROM games left join (SELECT genre_id, ROUND(AVG(critic_score), 3) avg_critic_score,  CEIL(AVG(critic_count)) avg_critic_count , ROUND(AVG(user_score), 3) avg_user_score , CEIL(AVG(user_count)) avg_user_count
+FROM games
+GROUP BY genre_id) A USING(genre_id)
+WHERE year >=2015 AND (critic_score | critic_count| user_score| user_count IS NULL)
