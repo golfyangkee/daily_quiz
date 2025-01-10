@@ -2,6 +2,8 @@
 SELECT genre_id, ROUND(AVG(critic_score), 3) avg_critic_score,  AVG(critic_count) avg_critic_count , ROUND(AVG(user_score), 3) avg_user_score , ROUND(AVG(user_count)) avg_user_count
 FROM games
 GROUP BY genre_id;
+-- 일반적으로 AVG는 NULL 값을 제외하고 평균을 내린다. 예를 들면 {NULL, 10, 20} 이면 (10+20)/2 인 15라고 계산한다.
+-- 그렇지만 평균을 구할 때 아예 WHERE 절에 IS NOT NULL 을 추가해서 NULL 이 아닌 친구들로만 평균을 내려야할 수가 있다. 그 이유는 GROUP BY에 영향을 줄 수 있기 때문이다.
 
 -- 2015년 이후 출시 제품 중 누락 정보 있는 게임 출력 100개
 SELECT game_id, name, critic_score, critic_count, user_score, user_count
@@ -14,3 +16,6 @@ FROM games left join (SELECT genre_id, ROUND(AVG(critic_score), 3) avg_critic_sc
 FROM games
 GROUP BY genre_id) A USING(genre_id)
 WHERE year >=2015 AND (critic_score | critic_count| user_score| user_count IS NULL)
+-- COALESCE 함수를 사용해서 구할 수 있다. 
+-- COALESCE 함수는 COALESCE(expression1, expression2, ..., expressionN) 이렇게 쓰이는 데 첫번째 표현이 NULL이면 두번째 표현을 넘기면서 NULL이 아닌 값을 반환한다.
+
