@@ -1,0 +1,26 @@
+WITH x_id_table AS (
+  -- x id 뽑기 40
+  SELECT ID AS X_ID
+  FROM points
+  WHERE x = (SELECT MAX(x)
+            FROM points)
+),
+y_id_table AS(
+  -- y id 뽑기 24
+  SELECT ID AS Y_ID
+  FROM points
+  WHERE y = (SELECT MAX(y)
+            FROM points)
+)
+
+SELECT X_ID, Y_ID
+FROM x_id_table, y_id_table;
+-- 이렇게 했는데 이게 아니라 컬럼이 그냥 id 하나만 있고 거기에 따라 값의 오름차순으로 정리하나 보다.
+
+SELECT id
+FROM points
+WHERE  x = (SELECT MAX(x) FROM points) OR 
+      y = (SELECT MAX(y)  FROM points)
+ORDER BY 1;
+
+그래서 이렇게 하니까 맞다고 한다.
