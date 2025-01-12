@@ -1,0 +1,18 @@
+
+-- CAST 함수는 소수점 이하는 버리는 함수
+-- strftime 은 %w 를 통해 주를 숫자로 뽑고 0부터 일요일이다.
+-- 월요일부터 나오게 해야 하니까 1(월요일)+6 %7 해서 월요일을 0으로 만들자.
+
+SELECT CASE strftime('%w', measured_at)
+        WHEN '1' THEN '월요일'
+        WHEN '2' THEN '화요일'
+        WHEN '3' THEN '수요일'
+        WHEN '4' THEN '목요일'
+        WHEN '5' THEN '금요일'
+        WHEN '6' THEN '토요일'
+        WHEN '0' THEN '일요일'
+    END AS weekday, ROUND(AVG(no2),4) no2, ROUND(AVG(o3), 4) o3, ROUND(AVG(co), 4) co, ROUND(AVG(so2), 4) so2, ROUND(AVG(pm10), 4) pm10, ROUND(AVG(pm2_5),4) pm2_5 
+FROM measurements
+GROUP BY strftime('%w', measured_at)
+ORDER BY (CAST(strftime('%w', measured_at) AS INTEGER) + 6) % 7;
+
