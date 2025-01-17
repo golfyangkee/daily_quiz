@@ -1,0 +1,28 @@
+-- 시 뽑아보기 , -1을 붙어야 ' ' 빼고 나온다.
+SELECT DISTINCT substr(address, 1, instr(address, ' ')-1) SIDO
+FROM cafes;
+
+-- 도 뽑아보기
+SELECT DISTINCT substr(address, instr(address, ' ')+1, instr(substr(address, instr(address, ' ') + 1), ' ') - 1) 
+FROM cafes;
+
+-- 합치기
+SELECT substr(address, 1, instr(address, ' ')-1) sido, substr(address, instr(address, ' ')+1, instr(substr(address, instr(address, ' ') + 1), ' ') - 1) sigungu, count(cafe_id) cnt
+FROM cafes
+GROUP BY sido, sigungu
+ORDER BY 3 DESC;
+
+-- substr(string, start, length)
+'''
+string: 부분 문자열을 추출할 대상 문자열입니다.
+start: 추출을 시작할 위치입니다. (1부터 시작)
+양수일 경우: 문자열의 시작 부분에서부터 해당 위치까지 이동.
+음수일 경우: 문자열의 끝에서부터 역순으로 이동.
+length: 추출할 문자의 개수입니다.
+생략하면, 시작 위치부터 문자열 끝까지 추출합니다.
+'''
+'''
+instr(string, substring)
+string: 검색 대상 문자열입니다.
+substring: 검색할 하위 문자열입니다.
+'''
