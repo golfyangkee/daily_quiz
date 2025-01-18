@@ -1,0 +1,26 @@
+WITH stats AS (
+    SELECT 
+        species,
+        AVG(flipper_length_mm) AS avg_flipper,
+        AVG(body_mass_g) AS avg_body,
+        SUM((flipper_length_mm - (SELECT AVG(flipper_length_mm) FROM penguins p2 WHERE p2.species = penguins.species)) *
+            (body_mass_g - (SELECT AVG(body_mass_g) FROM penguins p2 WHERE p2.species = penguins.species))) AS cov_xy,
+        SUM(POW(flipper_length_mm - (SELECT AVG(flipper_length_mm) FROM penguins p2 WHERE p2.species = penguins.species), 2)) AS var_x,
+        SUM(POW(body_mass_g - (SELECT AVG(body_mass_g) FROM penguins p2 WHERE p2.species = penguins.species), 2)) AS var_y
+    FROM 
+        penguins
+    GROUP BY 
+        species
+)
+SELECT 
+    species,
+    ROUND(cov_xy / (SQRT(var_x) * SQRT(var_y)), 3) AS corr
+FROM 
+    stats;
+
+'''
+pow() = 거듭제곱 함수
+피어슨 상관계수 = cov(x,y) / sqrt(var(x)*var(y))
+분산(var) = 편차**2 의 합
+공분산(cov) = 편차*편차 의 합들
+'''
