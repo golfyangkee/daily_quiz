@@ -1,0 +1,15 @@
+WITH avg_value AS (
+  SELECT quartet, AVG(x) x_mean, AVG(y) y_mean
+  FROM points
+  GROUP BY quartet
+)
+
+SELECT p.quartet, ROUND(a.x_mean, 2) x_mean, ROUND((SUM((x - a.x_mean) * (x - a.x_mean)) / (COUNT(x) - 1)), 2) AS x_var, ROUND(a.y_mean, 2) y_mean, ROUND(SUM((y-a.y_mean)*(y-a.y_mean))/ (COUNT(y)-1), 2) y_var
+FROM points p join avg_value a on p.quartet = a.quartet
+GROUP BY p.quartet;
+
+'''
+sqlite 에는 std var 이런 함수가 없다. avg 함수만 있고
+avg 함수도 집계함수와 함께 쓰일 수 없어서 sum(avg(x)) 이런 식으로 쓰일 수 없다.
+그리고 해당 문제는 모평균이 아닌 표본평균, 표본분산으로 진행해야 하기에 표본분산 구하는 공식으로 진행했다.
+'''
