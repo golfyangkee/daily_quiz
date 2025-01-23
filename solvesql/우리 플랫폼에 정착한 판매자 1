@@ -1,0 +1,12 @@
+SELECT seller_id, COUNT(DISTINCT order_id) orders
+FROM olist_order_items_dataset
+GROUP BY seller_id
+HAVING orders >=100;
+
+'''
+해당 문제는 총 주문이 100건 이상 들어온 seller_id를 출력하는 문제이다.
+처음에는 DISTINCT 를 빼고 하니까 계속 틀렸는데
+주문이 여러개인데 각 주문번호별 아이템이 나오는 형태여서
+주문번호 1 [아이템1, 아이템2, 아이템3] 이런 형태라 3줄이 나온다
+이를 방지하기 위해 오직 주문번호 1 만 카운팅하기 위해 DISTINCT를 넣는다.
+'''
