@@ -1,0 +1,2 @@
+SELECT ROUND(SUM(total_bill)/COUNT(DISTINCT day), 2) AS avg_sales
+FROM tips
