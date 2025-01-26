@@ -1,0 +1,31 @@
+SELECT DISTINCT seller_id, COUNT(DISTINCT order_id) orders
+FROM olist_order_items_dataset
+WHERE price >=50
+GROUP BY seller_id
+HAVING orders >= 100
+ORDER BY 2 DESC;
+
+'''
+해당 문제는
+상품 가격이 50달러 이상인 주문이 100건 이상 들어온 판매자 리스트를 주문 건수가 많은 순서대로 출력이었다.
+여기서 처음에는 HAVING에 50달러 이상과 100건 이상으로 했는데
+전제 조건이 50달러인 상품들로만 주문이 100건 이상이여서
+WHERE 로 50달러를 한 번 거르고 HAVING으로 100건을 넣었다.
+또 여기서 중요한 키포인트는 COUNT를 뭐로 할거냐였는데
+상품이 아닌 주문이라는 점과 해당 테이블은
+주문에 따른 모든 상품들을 보여주고 있어
+주문 1에 상품 A,B,C가 총 3줄로 표기되는 형태였다.
+그래서 DISTINCT order_id 로 진행하여 100건 이상을 찾았다.
+
+즉
+SELECT DISTINCT seller_id, COUNT(DISTINCT order_id) orders
+FROM olist_order_items_dataset
+GROUP BY seller_id
+HAVING orders >= 100 AND price >= 50
+ORDER BY 2 DESC;
+위 쿼리 처럼
+WHERE을 빼고 HAVING 안에 넣으면
+이미 PRICE는 GROUP BY로 여러개의 PRICE를 가지는데
+저렇게 넣으면 모호해져 버려 아마 무시한 값을 배출할 수 있다.
+이런 점을 체크하자
+'''
