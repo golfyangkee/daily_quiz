@@ -1,0 +1,11 @@
+SELECT DATE(order_delivered_carrier_date) AS delivered_carrier_date , COUNT(order_delivered_carrier_date) AS orders
+FROM olist_orders_dataset
+WHERE DATE(order_delivered_carrier_date) >='2017-01-01' AND DATE(order_delivered_carrier_date) <='2017-01-31' AND order_delivered_customer_date IS NULL
+GROUP BY delivered_carrier_date
+ORDER BY delivered_carrier_date;
+
+'''
+해당 문제의 DATE 형태가 시간까지 나오는 형태였고
+그래서 '2017-01-01' 이런게 대소 구분이 안되었다
+그래서 SQLITE에서 DATE 형태로 바꾸고 진행하니 해결되었다.
+'''
