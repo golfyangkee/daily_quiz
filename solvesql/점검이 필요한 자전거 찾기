@@ -1,0 +1,17 @@
+SELECT 
+    bike_id
+FROM 
+    rental_history
+WHERE 
+    DATE(rent_at) BETWEEN '2021-01-01' AND '2021-01-31'
+    AND DATE(return_at) BETWEEN '2021-01-01' AND '2021-01-31'
+GROUP BY 
+    bike_id
+HAVING 
+    SUM(distance) >= 50000;
+
+'''
+합계가 50 이상이 아니라 50KM로 50,000으로 했어야 하는데
+자꾸 안 해서 데이터가 없고 이상하게 나왔었다.
+단위를 잘 보자
+'''
