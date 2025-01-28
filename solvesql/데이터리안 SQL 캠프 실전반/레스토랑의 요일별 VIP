@@ -1,0 +1,9 @@
+-- SELECT day, max(total_bill)
+-- FROM tips
+-- GROUP BY day;
+
+SELECT t.total_bill, t.tip, t.sex, t.smoker, t.day, t.time, t.size
+FROM tips t join (SELECT day, max(total_bill) total_bill
+FROM tips
+GROUP BY day) a  using (day)
+WHERE t.day = a.day AND t.total_bill = a.total_bill;
