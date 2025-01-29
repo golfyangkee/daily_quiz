@@ -1,0 +1,12 @@
+SELECT a.name
+FROM records r join teams t on r.team_id = t.id JOIN games g on r.game_id = g.id JOIN athletes a on r.athlete_id = a.id
+WHERE g.year >= 2000 AND medal IS NOT NULL
+GROUP BY r.athlete_id
+HAVING COUNT(DISTINCT t.team) >= 2
+ORDER BY a.name;
+
+'''
+단순 조인만 하는 문제였고
+여기서 키 포인트는 여러 테이블의 연결이고
+medal 을 획득한 분들만 카운팅 해야하는 거였다.
+'''
