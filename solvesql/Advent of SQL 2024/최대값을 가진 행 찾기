@@ -23,4 +23,10 @@ WHERE  x = (SELECT MAX(x) FROM points) OR
       y = (SELECT MAX(y)  FROM points)
 ORDER BY 1;
 
-그래서 이렇게 하니까 맞다고 한다.
+
+-- UNION ALL 사용하는 방법 : UNION ALL 을 중복값도 다 나오게 된다.
+SELECT id
+FROM points
+WHERE  x = (SELECT MAX(x) FROM points) OR 
+      y = (SELECT MAX(y)  FROM points)
+ORDER BY 1;
