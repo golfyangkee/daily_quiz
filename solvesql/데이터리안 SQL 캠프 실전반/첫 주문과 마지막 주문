@@ -11,3 +11,9 @@ l AS (
 
 SELECT strftime('%Y-%m-%d', first_day) first_order_date , strftime('%Y-%m-%d', last_day) last_order_date  
 FROM f, l;
+
+
+-- 2차로 풀었을 때 내가 푼 것
+-- SUBSTR() 사용
+SELECT SUBSTR(MIN(order_purchase_timestamp), 1,10) AS first_order_date, SUBSTR(MAX(order_purchase_timestamp), 1, 10) AS last_order_date
+FROM olist_orders_dataset
