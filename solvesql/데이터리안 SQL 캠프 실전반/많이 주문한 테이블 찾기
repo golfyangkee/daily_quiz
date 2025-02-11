@@ -1,3 +1,13 @@
 SELECT *
 FROM tips
 WHERE total_bill > (SELECT AVG(total_bill) FROM tips)
+
+-- WITH 문으로 풀어보기
+WITH TBA AS (
+  SELECT AVG(total_bill) AS total_bill_avg
+  FROM tips
+)
+
+SELECT total_bill, tip, sex, smoker, day, time, size
+FROM tips t, TBA a
+WHERE t.total_bill > a.total_bill_avg;
