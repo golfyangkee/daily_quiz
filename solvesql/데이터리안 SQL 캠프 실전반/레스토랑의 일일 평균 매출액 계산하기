@@ -1,2 +1,12 @@
 SELECT ROUND(SUM(total_bill)/COUNT(DISTINCT day), 2) AS avg_sales
 FROM tips
+
+-- WITH문으로 풀어보기
+WITH day_avg AS (
+  SELECT day, SUM(total_bill) AS total_sales
+  FROM tips
+  GROUP BY day
+)
+
+SELECT ROUND(AVG(total_sales), 2) AS avg_sales
+FROM day_avg;
