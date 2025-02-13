@@ -21,3 +21,17 @@ FROM (
         tips
 ) A
 WHERE total_sales >=1500;
+
+
+--  WITH 문으로 풀어보기
+WITH day_sum AS (
+  SELECT day, SUM(total_bill)
+  FROM tips
+  GROUP BY day
+  HAVING SUM(total_bill) >= 1500
+)
+
+SELECT *
+FROM tips
+WHERE day in (SELECT day
+              FROM day_sum);
