@@ -7,3 +7,18 @@ FROM tips t join (SELECT day, max(total_bill) total_bill
 FROM tips
 GROUP BY day) a  using (day)
 WHERE t.day = a.day AND t.total_bill = a.total_bill;
+
+
+-- WITH 문으로 풀어보기
+-- 요일별 가장 높은 결제 금액 뽑기
+WITH high_bill AS (
+  SELECT day, MAX(total_bill)
+  FROM tips
+  GROUP BY day
+)
+
+SELECT *
+FROM tips 
+WHERE (day, total_bill) IN (SELECT *
+                            FROM high_bill)
+GROUP BY day;
