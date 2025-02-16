@@ -1,0 +1,86 @@
+-- 1월 8일거가 없다고 해서 한번 테스트 해봄, 6건 있다고 나옴
+SELECT
+  DATE(order_purchase_timestamp) AS "day",
+  COUNT(order_id) AS "total"
+FROM
+  olist_orders_dataset
+WHERE
+  DATE(order_purchase_timestamp) = "2017-01-08";
+
+-- 실패한 케이스 조회하면 아무것도 안 나옴 왜냐 null값 2개도 안 나오고 성공한 4개도 포함이 안되니까
+-- 그렇다면 그냥 전체 주문 수에서 빼기를 하는 게 가장 편하다
+SELECT
+  *
+FROM
+  olist_orders_dataset
+WHERE
+  DATE(order_purchase_timestamp) = "2017-01-09"
+  AND (
+    order_estimated_delivery_date < order_delivered_customer_date
+  );
+
+-- 이렇게 하면 성공 개수 잘 나오는데
+SELECT
+  *
+FROM
+  olist_orders_dataset
+WHERE
+  DATE(order_purchase_timestamp) = "2017-01-08"
+  and (
+    order_estimated_delivery_date >= order_delivered_customer_date
+  );
+
+WITH
+  succeess_data AS (
+    -- 2017년 1월 한달 동안의 성공 데이터 카운트 하기
+    -- 처음에는 having 절에 order_estimated_delivery_date >= order_delivered_customer_date 이걸 넣었는데 안되어서 
+    -- where 절에 넣으니 진행되는 거로 확인
+    SELECT
+      DATE(order_purchase_timestamp) AS "day",
+      COUNT(order_id) AS success
+    FROM
+      olist_orders_dataset
+    WHERE
+      DATE(order_purchase_timestamp) BETWEEN "2017-01-01" AND "2017-01-31"
+      AND
+      (order_estimated_delivery_date >= order_delivered_customer_date)
+    GROUP BY
+      DATE(order_purchase_timestamp)
+  ),
+  total_order AS (
+    -- 전체 주문 수 구하기, order_delivered_customer_date NULL 값은 제외해야 함
+    SELECT
+      DATE(order_purchase_timestamp) AS "day",
+      COUNT(order_id) AS "total"
+    FROM
+      olist_orders_dataset
+    WHERE
+      DATE(order_purchase_timestamp) BETWEEN "2017-01-01" AND "2017-01-31"
+      AND order_delivered_customer_date IS NOT NULL
+    GROUP BY
+      DATE(order_purchase_timestamp)
+  )
+  -- 빼는 방안으로 풀어봄, LEFT JOIN 으로 하면 왜 1월8일꺼가 NULL NULL 로 나오지?
+SELECT
+  a.day AS "purchase_date",
+  b.success,
+  (a.total - b.success) AS fail
+FROM
+  total_order a LEFT
+  JOIN succeess_data b on a.day = b.day;
+
+'''
+## 생각해보기 : HAVING 절에는 하나하나의 개별 행 조건이 아닌 GROUP 즉 집계 함수의 조건만 넣을 수 있다.
+WHERE에 
+order_estimated_delivery_date >= order_delivered_customer_date
+이걸 넣는 것과 HAVING에 넣는 거과의 차이는 무엇일까?
+
+❌ 이 쿼리는 오류 발생 가능성 있음 ❌
+(SQLite, MySQL 등에서는 실행되지 않거나 논리적으로 이상한 결과가 나옴)
+
+왜 문제가 발생할까?
+HAVING은 GROUP BY 이후 실행되므로, HAVING에서 사용할 수 있는 것은 집계된 결과여야 함.
+하지만 order_estimated_delivery_date >= order_delivered_customer_date는 각 개별 행에 대한 조건.
+HAVING은 COUNT(order_id), SUM(price) 같은 집계 함수 결과를 기준으로 필터링할 때 사용해야 함.
+🔹 즉, HAVING에서는 COUNT(order_id) >= 10 같은 집계 함수 기반 조건을 적용해야 하지만, 개별 행 조건인 order_estimated_delivery_date >= order_delivered_customer_date를 사용할 수 없음.
+'''
