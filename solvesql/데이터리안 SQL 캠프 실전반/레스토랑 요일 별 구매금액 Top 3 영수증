@@ -1,0 +1,13 @@
+WITH ranked_bills AS (
+    SELECT 
+        day, 
+        time, 
+        sex, 
+        total_bill,
+        RANK() OVER (PARTITION BY day ORDER BY total_bill DESC) AS rank_num
+    FROM tips
+)
+SELECT day, time, sex, total_bill
+FROM ranked_bills
+WHERE rank_num <= 3
+ORDER BY day, rank_num, total_bill DESC;
