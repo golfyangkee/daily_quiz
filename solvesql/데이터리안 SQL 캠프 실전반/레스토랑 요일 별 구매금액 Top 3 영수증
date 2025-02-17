@@ -1,13 +1,10 @@
-WITH ranked_bills AS (
-    SELECT 
-        day, 
-        time, 
-        sex, 
-        total_bill,
-        RANK() OVER (PARTITION BY day ORDER BY total_bill DESC) AS rank_num
-    FROM tips
+-- 일단 윈도우 함수 rank() over() 함수로 day별 total_bill 정렬하기
+WITH rank_order AS (
+SELECT day, time, sex, total_bill, RANK() OVER (PARTITION BY day ORDER BY total_bill DESC) AS rank_num
+FROM tips
 )
+
+-- 그 중 top 3 즉 넘버 3까지만 가져오기
 SELECT day, time, sex, total_bill
-FROM ranked_bills
-WHERE rank_num <= 3
-ORDER BY day, rank_num, total_bill DESC;
+FROM rank_order
+WHERE rank_num <= 3;
