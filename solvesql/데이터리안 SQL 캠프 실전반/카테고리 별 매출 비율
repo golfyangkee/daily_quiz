@@ -1,0 +1,29 @@
+WITH sub_category_sales AS (
+    SELECT
+        category,
+        sub_category,
+        ROUND(SUM(sales), 2) AS sales_sub_category
+    FROM records
+    GROUP BY category, sub_category
+),
+category_sales AS (
+    SELECT
+        category,
+        ROUND(SUM(sales), 2) AS sales_category
+    FROM records
+    GROUP BY category
+),
+total_sales AS (
+    SELECT ROUND(SUM(sales), 2) AS sales_total FROM records
+)
+SELECT 
+    s.category,
+    s.sub_category,
+    s.sales_sub_category,
+    c.sales_category,
+    t.sales_total,
+    ROUND((s.sales_sub_category * 100.0) / c.sales_category, 2) AS pct_in_category,
+    ROUND((s.sales_sub_category * 100.0) / t.sales_total, 2) AS pct_in_total
+FROM sub_category_sales s
+JOIN category_sales c ON s.category = c.category
+JOIN total_sales t;
