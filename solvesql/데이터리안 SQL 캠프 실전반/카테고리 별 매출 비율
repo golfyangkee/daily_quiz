@@ -27,3 +27,32 @@ SELECT
 FROM sub_category_sales s
 JOIN category_sales c ON s.category = c.category
 JOIN total_sales t;
+
+
+-- WITH문 하나로만 풀어보기
+-- 카테고리별 SALES 합
+WITH
+  hap_cate AS (
+    SELECT
+      category,
+      SUM(sales) sum_cate
+    FROM
+      records
+    GROUP BY
+      category
+  )
+
+SELECT
+  r.category,
+  r.sub_category,
+  ROUND(SUM(r.sales), 2) AS sales_sub_category,
+  ROUND(h.sum_cate, 2) AS sales_category,
+  (SELECT ROUND(SUM(sum_cate), 2) FROM hap_cate) AS sales_total,
+  ROUND((SUM(r.sales) * 100.0 / h.sum_cate), 2) AS pct_in_category,
+  ROUND(SUM(r.sales)*100.0 / (SELECT SUM(sum_cate) FROM hap_cate), 2) AS pct_in_total
+FROM
+  records r
+  join hap_cate h ON r.category = h.category
+GROUP BY
+  r.category,
+  r.sub_category;
