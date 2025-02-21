@@ -1,0 +1,13 @@
+-- 일단 ga_session_id 별로 시작 시각과 종료 시각을 구해보자.
+-- 답은 레코드 6개여야 한다.
+-- 이렇게 하면 레코드 8개 나온다.
+WITH first_data AS (
+SELECT user_pseudo_id, ga_session_id, MIN(event_timestamp_kst) AS session_start, MAX(event_timestamp_kst) AS 'session_end'
+FROM ga
+WHERE user_pseudo_id = 'S3WDQCqLpK'
+GROUP BY user_pseudo_id, ga_session_id
+)
+
+-- 이런 식으로 쿼리 짜서 f.session_start랑 s.session_end랑 차이가 1시간 미만이면 s.session_start랑 f.session_end랑 나오게 하려고 함 
+SELECT user_pseudo_id, session_start, session_end
+FROM first_data f LEFT JOIN first_data s on (f.gasseion_id)+1 = s.gasession_id
