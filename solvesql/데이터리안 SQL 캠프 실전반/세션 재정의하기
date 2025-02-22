@@ -1,3 +1,18 @@
+'''
+- LAG() 함수란?
+LAG() 함수는 SQL 윈도우 함수(Window Function) 중 하나로, 이전 행(previous row)의 값을 현재 행에서 참조할 수 있도록 해주는 함수입니다.
+
+LAG(column_name, offset, default) OVER (PARTITION BY ... ORDER BY ...)
+
+column_name: 가져올 값 (이전 행의 특정 컬럼)
+offset: 몇 번째 이전 행을 가져올지 (기본값: 1)
+default: 이전 행이 없을 때 반환할 기본값 (선택 사항)
+PARTITION BY: 같은 그룹 내에서만 LAG() 적용
+ORDER BY: 어떤 순서로 이전 행을 가져올지 설정 (정렬 필수)
+'''
+
+'''
+-- 초기 진행
 -- 일단 ga_session_id 별로 시작 시각과 종료 시각을 구해보자.
 -- 답은 레코드 6개여야 한다.
 -- 이렇게 하면 레코드 8개 나온다.
@@ -11,3 +26,53 @@ GROUP BY user_pseudo_id, ga_session_id
 -- 이런 식으로 쿼리 짜서 f.session_start랑 s.session_end랑 차이가 1시간 미만이면 s.session_start랑 f.session_end랑 나오게 하려고 함 
 SELECT user_pseudo_id, session_start, session_end
 FROM first_data f LEFT JOIN first_data s on (f.gasseion_id)+1 = s.gasession_id
+'''
+
+WITH first_data AS (
+    -- 사용자별 세션 시작과 종료 시간 구하기
+    SELECT 
+        user_pseudo_id, 
+        ga_session_id, 
+        MIN(event_timestamp_kst) AS session_start, 
+        MAX(event_timestamp_kst) AS session_end
+    FROM ga
+    WHERE user_pseudo_id = 'S3WDQCqLpK'
+    GROUP BY user_pseudo_id, ga_session_id
+), session_comparison AS (
+    -- 이전 세션 종료 시각 가져오기
+    SELECT 
+        user_pseudo_id, 
+        session_start, 
+        session_end, 
+        LAG(session_start) OVER (PARTITION BY user_pseudo_id ORDER BY session_end) AS prev_session_start,
+        LAG(session_end) OVER (PARTITION BY user_pseudo_id ORDER BY session_start) AS prev_session_end
+    FROM first_data
+), session_flagging AS (
+    -- 이전 세션 종료 시간과 현재 세션 시작 시간이 1시간 이상 차이 나는 경우 새로운 세션으로 판단
+    SELECT 
+        user_pseudo_id, 
+        session_start, 
+        session_end, 
+        CASE 
+            WHEN prev_session_end IS NULL OR strftime("%s", session_start) - strftime("%s", prev_session_end) > 3600
+            THEN 1 
+            ELSE 0 
+        END AS new_session_flag
+    FROM session_comparison
+), session_id_assignment AS (
+    -- 같은 세션이면 같은 그룹 ID 부여
+    SELECT 
+        user_pseudo_id, 
+        session_start, 
+        session_end, 
+        SUM(new_session_flag) OVER (PARTITION BY user_pseudo_id ORDER BY session_start ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS session_group
+    FROM session_flagging
+)
+ -- 같은 그룹을 가지는 세션끼리 병합 (최소 시작 시간, 최대 종료 시간)
+SELECT 
+    user_pseudo_id, 
+    MIN(session_start) AS session_start , 
+    MAX(session_end) AS session_end 
+FROM session_id_assignment
+GROUP BY user_pseudo_id, session_group
+ORDER BY session_start;
