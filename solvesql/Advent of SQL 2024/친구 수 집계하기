@@ -1,0 +1,35 @@
+-- 친구 카운팅 하기
+WITH
+  fc AS (
+    SELECT
+      user_id,
+      COUNT(*) AS friend_count
+    FROM
+      (
+        SELECT
+          user_a_id AS user_id,
+          user_b_id
+        FROM
+          edges
+        UNION ALL
+        SELECT
+          user_b_id AS user_id,
+          user_a_id
+        FROM
+          edges
+      ) AS all_users
+    GROUP BY
+      1
+    ORDER BY
+      2 DESC,
+      1
+  )
+SELECT
+  u.user_id,
+  IFNULL(fc.friend_count, 0) AS num_friends
+FROM
+  users u
+  LEFT JOIN fc on u.user_id = fc.user_id
+ORDER BY
+  2 DESC,
+  1;
