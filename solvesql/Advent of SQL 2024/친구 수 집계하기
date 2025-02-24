@@ -61,4 +61,13 @@ ORDER BY
   1;
 
 왜 이거는 안되는 지 생각해보기
+
+문제 1 user_a_id가 null인 경우
+user_b_id를 기준으로 COUNT를 사용하면, user_a_id와 user_b_id 중 user_b_id가 NULL인 경우가 없다면 상관없습니다.
+하지만 LEFT JOIN을 사용하고 있기 때문에, user_a_id가 NULL인 경우에도 user_b_id를 세기 위해서는 COUNT(user_b_id) 대신 COUNT(*)를 사용하는 것이 일반적입니다.
+COUNT(user_b_id)는 user_b_id가 NULL일 경우 그 행을 세지 않기 때문에, 결과적으로 친구 수가 정확하게 집계되지 않을 수 있습니다.
+
+문제 2 union all을 하는 이유는 단방향 친구가 아닌 서로간의 친구이기 때문이다.
+1이랑 2랑 친구이면
+2랑 1이랑도 친구이다. 그래서 저렇게 코드 짬
 '''
