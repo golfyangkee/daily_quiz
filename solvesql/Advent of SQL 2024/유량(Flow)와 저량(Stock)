@@ -1,0 +1,27 @@
+with
+  ay as (
+    -- 소장년도에 따라 구하기
+    SELECT
+      strftime ('%Y', acquisition_date) as a_y,
+      count(DISTINCT artwork_id) as n_a
+    FROM
+      artworks
+    where
+      acquisition_date is not null
+    group by
+      strftime ('%Y', acquisition_date)
+  )
+  -- 누적년도에 따라 구하기
+SELECT
+  ay1.a_y as 'Acquisition year',
+  ay1.n_a as 'New acquisitions this year (Flow)',
+  (
+    SELECT
+      sum(ay2.n_a)
+    FROM
+      ay ay2
+    where
+      ay2.a_y <= ay1.a_y
+  ) as 'Total collection size (Stock)'
+FROM
+  ay ay1
