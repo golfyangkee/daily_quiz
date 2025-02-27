@@ -1,0 +1,8 @@
+'''
+Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+'''
+-- "JPN" 이렇게 하면 안된다.
+
+select distinct name
+from city
+where countrycode = 'JPN';
