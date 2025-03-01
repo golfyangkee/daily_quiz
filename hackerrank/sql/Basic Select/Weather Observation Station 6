@@ -1,0 +1,11 @@
+'''
+Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+where LAT_N is the northern latitude and LONG_W is the western longitude.
+
+정규표현식 regexp 로 풀기
+^	문자열의 시작을 의미
+'''
+
+select distinct city
+from station
+WHERE CITY REGEXP '^[AEIOU]';
