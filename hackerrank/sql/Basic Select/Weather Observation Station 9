@@ -1,0 +1,9 @@
+'''
+Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+
+풀이: not regexp 사용하면 된다!
+'''
+
+select distinct city
+from station
+where city not regexp '^[AEIOU]';
