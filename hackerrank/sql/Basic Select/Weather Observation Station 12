@@ -1,3 +1,8 @@
 select distinct city
 from station
 where city not regexp '^[AEUIO]' and city not regexp '[AEUIO]$'
+
+'''
+'^[AEUIO]$'는
+CITY 이름이 단 한 글자이고, 그 한 글자가 A, E, I, O, U일 경우만 제외
+'''
