@@ -1,0 +1,18 @@
+'''
+You are given a table, Functions, containing two columns: X and Y.
+Two pairs (X1, Y1) and (X2, Y2) are said to be symmetric pairs if X1 = Y2 and X2 = Y1.
+Write a query to output all such symmetric pairs in ascending order by the value of X. List the rows such that X1 ≤ Y1.
+'''
+
+
+'''
+이게 뭘 의미하는 건지 몰라서 일단 이렇게 풀어보고 있는데 
+잘 하는 지 모르겠음
+'''
+
+
+SELECT DISTINCT LEAST(f1.X, f1.Y) AS X, GREATEST(f1.X, f1.Y) AS Y
+FROM Functions f1
+JOIN Functions f2 
+ON f1.X = f2.Y AND f1.Y = f2.X
+ORDER BY X;
