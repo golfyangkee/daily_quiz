@@ -1,3 +1,14 @@
+'''
+coalesce 함수 설명
+
+COALESCE(value1, value2, value3, ..., default_value)
+왼쪽에서 오른쪽으로 값을 검사하며, NULL이 아닌 첫 번째 값을 반환.
+모든 값이 NULL이면 NULL을 반환.
+
+
+'''
+
+
 SELECT
     c.contest_id,
     c.hacker_id,
