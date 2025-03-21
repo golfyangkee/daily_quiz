@@ -6,6 +6,23 @@ COALESCE(value1, value2, value3, ..., default_value)
 모든 값이 NULL이면 NULL을 반환.
 
 
+✅ 질문 요점
+COALESCE(SUM(ss.total_submissions), 0)에서 SUM() 결과에 NULL이 없는데 왜 굳이 COALESCE를 쓰는 거야?
+
+정답은 👉 "LEFT JOIN과 GROUP BY를 함께 쓸 때, SUM() 결과 자체가 NULL이 될 수 있기 때문"이야!
+
+sum 은 진행 시 null 값은 무시하고 더해준다.
+즉, SUM()은 내부에 값이 하나도 없거나 모두 NULL이면 결과가 NULL이야.
+하지만 total_submissions 컬럼에 NULL이 없다면, SUM은 보통 NULL을 반환하지 않아.
+
+left join 때문에 이렇게 쓰는 건데
+left join 시 Submission_Stats에 매칭되는 데이터가 없는 contest_id가 있다면?
+
+LEFT JOIN 때문에 ss.total_submissions은 NULL이 아니라 아예 데이터 자체가 없음
+그래서 SUM()의 입력이 **"아예 없다"**면 SUM() 결과는 NULL
+🎯 이 경우 COALESCE(SUM(...), 0)이 없으면 NULL이 그대로 출력됨
+하지만 우리는 **"해당 contest에 제출이 0건이다"**라고 표현하고 싶으니까
+👉 NULL 대신 0을 넣기 위해 COALESCE(..., 0)을 쓰는 거야
 '''
 
 
