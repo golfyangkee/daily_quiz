@@ -23,6 +23,11 @@ LEFT JOIN 때문에 ss.total_submissions은 NULL이 아니라 아예 데이터 �
 🎯 이 경우 COALESCE(SUM(...), 0)이 없으면 NULL이 그대로 출력됨
 하지만 우리는 **"해당 contest에 제출이 0건이다"**라고 표현하고 싶으니까
 👉 NULL 대신 0을 넣기 위해 COALESCE(..., 0)을 쓰는 거야
+
+조인 테이블을 서브테이블로 해서 넣을 수도 있다.
+
+on 칼럼명 다를 때
+using 칼럼명 같을 때 사용
 '''
 
 
