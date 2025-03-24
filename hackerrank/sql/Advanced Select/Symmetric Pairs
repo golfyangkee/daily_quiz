@@ -20,6 +20,20 @@ ORDER BY X;
 안된다...
 '''
 
+'''
+union vs union all
+
+UNION	
+✅ 중복 제거 (DISTINCT 자동 적용)	
+⏳ 상대적으로 느림 (중복 제거 연산 필요)	
+결과에서 중복을 제거하고 싶을 때	
+
+UNION ALL
+❌ 중복 제거 안 함 (모든 행 출력)
+⚡ 더 빠름 (중복 체크 안 하니까)
+결과에 중복을 포함하고 싶을 때
+'''
+
 SELECT x, y
 FROM functions 
 WHERE x = y 
