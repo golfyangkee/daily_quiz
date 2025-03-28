@@ -6,11 +6,6 @@ Write a query to output all such symmetric pairs in ascending order by the value
 
 
 '''
-이게 뭘 의미하는 건지 몰라서 일단 이렇게 풀어보고 있는데 
-잘 하는 지 모르겠음
-'''
-
-'''
 처음 풀은 코드
 SELECT DISTINCT LEAST(f1.X, f1.Y) AS X, GREATEST(f1.X, f1.Y) AS Y
 FROM Functions f1
@@ -34,6 +29,17 @@ UNION ALL
 결과에 중복을 포함하고 싶을 때
 '''
 
+'''
+MYSQL 의 진행 순서는
+1️⃣	FROM	        어떤 테이블에서 데이터를 가져올지 결정
+2️⃣	JOIN	        여러 테이블이 있다면 JOIN 수행
+3️⃣	WHERE	        행(Row) 단위 조건 필터링 (그룹화 전)
+4️⃣	GROUP BY	행들을 그룹으로 묶음
+5️⃣	HAVING	        그룹에 대한 조건 필터링
+6️⃣	SELECT	        최종 출력할 컬럼 결정
+7️⃣	ORDER BY	정렬 수행
+8️⃣	LIMIT	        결과 행 수 제한 (선택적)
+'''
 SELECT x, y
 FROM functions 
 WHERE x = y 
