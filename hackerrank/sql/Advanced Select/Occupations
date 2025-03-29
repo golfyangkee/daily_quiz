@@ -6,6 +6,11 @@ with their respective names listed alphabetically under each column.
 Note: Print NULL when there are no more names corresponding to an occupation.
 '''
 
+'''
+occupation 으로 group by 형태가 되는 거고 정렬은 Name으로 되는 거다
+그거로 넘버링이 진행됨
+'''
+
 WITH Ranked_Occupations AS (
     SELECT 
         Name,
