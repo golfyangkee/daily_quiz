@@ -26,3 +26,8 @@ AVERAGE_LENGTH
 
 SELECT ROUND(AVG(IFNULL(LENGTH, 10)), 2) AS AVERAGE_LENGTH
 FROM FISH_INFO
+
+
+'''
+ifnull() 함수는 첫번째 매개변수가 0 이면 두번째 매개변수로 값을 변경하는 형태를 가진다.
+'''
