@@ -13,7 +13,9 @@ If more than one Occupation has the same [occupation_count], they should be orde
 
 Note: There will be at least two entries in the table for each type of occupation.
 '''
-
+'''
+substr()은 해당 컬럼의 값들의 몇번째 글자부터 몇개의 글자를 추출할때 사용한다.
+'''
 
 select concat(name, '(', substr(occupation, 1,1), ')') name_O
 from OCCUPATIONS
